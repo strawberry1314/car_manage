@@ -11,7 +11,11 @@ public interface UserService {
 
     List<User> getAll();
 
+    User getOneById(String id);
+
     void insert(User user);
 
     void delete(String id);
+
+    void update(User user);
 }

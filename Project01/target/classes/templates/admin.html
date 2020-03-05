@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>admain,管理员用户界面</h1>
+
+<p th:each="user:${userList}">
+    <span th:text="${user.username}"></span>
+    <span th:text="${user.password}"></span>
+    <span th:text="${user.role}"></span>
+    <a href="#">修改密码</a>
+
+    <td th:if="${user.status} eq '1'">
+        <a th:href="@{/stopUser/} + ${user.userid}">停用</a>
+    </td>
+    <td th:if="${user.status} eq '0'">
+        <a th:href="@{/startUser/} + ${user.userid}">启用</a>
+    </td>
+    <a th:href="@{/delete/} + ${user.userid}">删除</a>
+</p>
+
+<form th:action="@{/add}" method="post">
+    <input type="text" name="username">
+    <input type="text" name="password">
+    <input type="submit" value="新增">
+</form>
+
+
+
+</body>
+</html>

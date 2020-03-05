@@ -32,21 +32,41 @@ public class UserController {
             model.addAttribute("msg","用户名或密码错误");
             return "login";
         }else{
+            if(user.getStatus() == 0){
+                model.addAttribute("msg","用户已停用");
+                return "login";
+            }
             session.setAttribute("user",user);
-            if("admain".equals(user.getRole())){
-                return "redirect:/admain";
+            if("admin".equals(user.getRole())){
+                return "redirect:/admin";
             }else{
                 return "hello";
             }
         }
     }
 
-    @GetMapping("/admain")
-    public String userLiist(Model model){
+    @GetMapping("/admin")
+    public String userList(Model model){
         List<User> list = userService.getAll();
         model.addAttribute("userList",list);
         System.out.println(list);
-        return "admain";
+        return "admin";
+    }
+
+    @RequestMapping("/stopUser/{id}")
+    public String stopUser(@PathVariable("id") String id){
+        User user = userService.getOneById(id);
+        user.setStatus(0);
+        userService.update(user);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping("/startUser/{id}")
+    public String startUser(@PathVariable("id") String id){
+        User user = userService.getOneById(id);
+        user.setStatus(1);
+        userService.update(user);
+        return "redirect:/admin";
     }
 
     @PostMapping("/add")
@@ -54,15 +74,15 @@ public class UserController {
         String id = UUID.randomUUID().toString();
         user.setUserid(id);
         user.setRole("user");
+        user.setStatus(1);
         userService.insert(user);
-        return "redirect:/admain";
-
+        return "redirect:/admin";
     }
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable("id") String id,Model model){
         userService.delete(id);
-        return "redirect:/admain";
+        return "redirect:/admin";
     }
 
 }

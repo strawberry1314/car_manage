@@ -21,8 +21,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        List<User> users = userMapper.selectAll();
+        User user = new User();
+        user.setRole("user");
+        List<User> users = userMapper.select(user);
         return users;
+    }
+
+    @Override
+    public User getOneById(String id){
+        return userMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -33,5 +40,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String id) {
         userMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void update(User user){
+        userMapper.updateByPrimaryKey(user);
     }
 }
