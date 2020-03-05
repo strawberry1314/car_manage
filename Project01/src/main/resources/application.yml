@@ -1,0 +1,28 @@
+logging:
+  level:
+    com.jfrao: debug
+
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: scott
+    password: 1234
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql:///springboot?characterEncoding=utf-8&serverTimezone=UTC
+#    username: root
+#    password: lnfan1314
+  mvc:
+    servlet:
+      load-on-startup: 1
+  thymeleaf:
+    cache: false
+    mode: HTML5
+    encoding: utf-8
+
+mybatis:
+  type-aliases-package: com.jfrao.domain
+  mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: null
