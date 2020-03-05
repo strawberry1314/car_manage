@@ -6,7 +6,7 @@
 </head>
 <body>
 <p th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"/>
-<form th:action="@{/login}" method="post">
+<form th:action="@{/userlogin}" method="post">
     用户名：<input type="text" name="username" placeholder="请输入用户名">
     <br/>
     密码：<input type="password" name="password" placeholder="请输入密码">

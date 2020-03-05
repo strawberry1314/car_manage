@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>admain,管理员用户界面</h1>
+<a th:href="@{/quit}">退出</a>
 
 <p th:each="user:${userList}">
     <span th:text="${user.username}"></span>

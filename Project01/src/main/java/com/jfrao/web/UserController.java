@@ -10,41 +10,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
 public class UserController {
 
-
     @Autowired
     private UserService userService;
 
-
-    @PostMapping("/login")
-    public String login(HttpServletRequest request, Model model, HttpSession session){
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        User user = userService.login(username, password);
-        if(user == null){
-            model.addAttribute("msg","用户名或密码错误");
-            return "login";
-        }else{
-            if(user.getStatus() == 0){
-                model.addAttribute("msg","用户已停用");
-                return "login";
-            }
-            session.setAttribute("user",user);
-            if("admin".equals(user.getRole())){
-                return "redirect:/admin";
-            }else{
-                return "hello";
-            }
-        }
-    }
-
+    //超级用户
     @GetMapping("/admin")
     public String userList(Model model){
         List<User> list = userService.getAll();
@@ -53,6 +28,7 @@ public class UserController {
         return "admin";
     }
 
+    //停用用户
     @RequestMapping("/stopUser/{id}")
     public String stopUser(@PathVariable("id") String id){
         User user = userService.getOneById(id);
@@ -61,6 +37,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
+    //启用用户
     @RequestMapping("/startUser/{id}")
     public String startUser(@PathVariable("id") String id){
         User user = userService.getOneById(id);
@@ -69,6 +46,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
+    //添加用户
     @PostMapping("/add")
     public String add(User user){
         String id = UUID.randomUUID().toString();
@@ -79,6 +57,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
+    //删除用户
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable("id") String id,Model model){
         userService.delete(id);

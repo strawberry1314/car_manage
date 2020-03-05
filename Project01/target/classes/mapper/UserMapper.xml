@@ -4,6 +4,6 @@
 
 
     <select id="login" resultType="com.jfrao.domain.User">
-        select * from t_user where username=#{username} and password=#{password}
+        select * from ds_user where username=#{username} and password=#{password}
     </select>
 </mapper>
