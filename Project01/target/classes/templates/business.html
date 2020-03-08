@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>业务选择</h1>
+
+<a th:href="@{/create/} + ${'业务1'}">办理业务</a>
+
+<h2 th:text="${wait_customer.num}" th:if="${not #strings.isEmpty(wait_customer)}"></h2>
+<h2 th:text="${wait_customer.business}" th:if="${not #strings.isEmpty(wait_customer)}"></h2>
+
+</body>
+</html>

@@ -81,6 +81,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!--语音播放-->
+        <dependency>
+            <groupId>com.jacob</groupId>
+            <artifactId>jacob</artifactId>
+            <version>1.19</version>
+        </dependency>
+
 
 
 
