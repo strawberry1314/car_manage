@@ -11,9 +11,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -42,7 +42,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RebelAgentSelection">
     <selection>jr</selection>
@@ -100,7 +100,9 @@
       <updated>1583286481830</updated>
       <workItem from="1583286485279" duration="9838000" />
       <workItem from="1583374235594" duration="11603000" />
-      <workItem from="1583388362334" duration="3706000" />
+      <workItem from="1583388362334" duration="3843000" />
+      <workItem from="1583456572296" duration="16151000" />
+      <workItem from="1583633554949" duration="4941000" />
     </task>
     <servers />
   </component>
@@ -112,7 +114,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
