@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,10 +86,10 @@ public class BusinessController {
 
     //办理业务
     @GetMapping("/create/{business}")
-    public String create(@PathVariable("business") String business, Model model){
+    public void create(@PathVariable("business") String business, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Customer customer = add(business);
-        model.addAttribute("wait_customer",customer);
-        return "business";
+        request.setAttribute("customer", customer);
+        request.getRequestDispatcher("/Log/CreateBusiness").forward(request, response);
     }
 
     //小窗口申请分派业务

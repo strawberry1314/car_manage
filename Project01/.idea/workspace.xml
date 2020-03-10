@@ -11,9 +11,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -37,7 +37,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/_01basic" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -103,6 +103,8 @@
       <workItem from="1583388362334" duration="3843000" />
       <workItem from="1583456572296" duration="16151000" />
       <workItem from="1583633554949" duration="4941000" />
+      <workItem from="1583738986377" duration="5534000" />
+      <workItem from="1583804866985" duration="10107000" />
     </task>
     <servers />
   </component>

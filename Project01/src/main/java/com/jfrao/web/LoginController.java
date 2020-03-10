@@ -8,8 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 public class LoginController {
@@ -19,7 +22,7 @@ public class LoginController {
 
     //登录
     @PostMapping("/userlogin")
-    public String login(HttpServletRequest request, Model model, HttpSession session){
+    public String login(HttpServletRequest request, Model model, HttpSession session, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("----web");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -35,20 +38,22 @@ public class LoginController {
                 return "login";
             }
             session.setAttribute("user",user);
+            //密码正确就转发到日志存储控制器
+            request.getRequestDispatcher("/Log/Login").forward(request, response);
             //判断用户角色
-            if("admin".equals(user.getRole())){
-                return "redirect:/admin";
-            }else{
-                return "hello";
-            }
+//            if("admin".equals(user.getRole())){
+//                return "redirect:/admin";
+//            }else{
+//                return "hello";
+//            }
+            return null;
         }
     }
 
     //退出
     @RequestMapping("/quit")
-    public String quit(HttpSession session){
-        session.removeAttribute("user");
-        return "redirect:/login";
+    public void quit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/Log/Exit").forward(request, response);
     }
 
 }
