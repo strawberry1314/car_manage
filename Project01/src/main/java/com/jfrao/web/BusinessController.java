@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -93,9 +97,8 @@ public class BusinessController {
 
     //办理业务
     @GetMapping("/create/{business}")
-    public String create(@PathVariable("business") String business,Model model) {
+    public void create(@PathVariable("business") String business, HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         Customer customer = add(business);
-        model.addAttribute("wait_customer",customer);
 
         //生成排队号码记录，存入数据库中
         Queue_Number number = new Queue_Number();
@@ -106,7 +109,10 @@ public class BusinessController {
         //存入数据库
         numberService.addNumber(number);
 
-        return "business";
+        //记录办理业务操作日志
+        request.setAttribute("customer", customer);
+        request.getRequestDispatcher("/Log/CreateBusiness").forward(request, response);
+
     }
 
     //小窗口申请分派业务
