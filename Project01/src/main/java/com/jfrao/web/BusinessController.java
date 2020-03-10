@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -93,7 +93,7 @@ public class BusinessController {
 
     //办理业务
     @GetMapping("/create/{business}")
-    public String create(@PathVariable("business") String business, Model model){
+    public String create(@PathVariable("business") String business,Model model) {
         Customer customer = add(business);
         model.addAttribute("wait_customer",customer);
 
