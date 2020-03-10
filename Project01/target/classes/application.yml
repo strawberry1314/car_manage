@@ -25,4 +25,4 @@ mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
-    jdbc-type-for-null: null
+    jdbc-type-for-null: varchar

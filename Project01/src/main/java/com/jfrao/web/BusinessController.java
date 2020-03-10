@@ -4,21 +4,33 @@ import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 import com.jfrao.domain.Customer;
+import com.jfrao.domain.Queue_Number;
+import com.jfrao.service.NumberService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+@Slf4j
 @Controller
 public class BusinessController {
 
     private static List<Customer> list = new ArrayList<>();
     private static Integer index = 1;
     private static Object lock = new Object();
+
+    @Autowired
+    private NumberService numberService;
 
     //生成业务
     public Customer add(String business){
@@ -31,11 +43,10 @@ public class BusinessController {
             num += str;
             index++;
             Customer customer = new Customer();
+            customer.setNumid(UUID.randomUUID().toString());
             customer.setBusiness(business);
             customer.setNum(num);
             list.add(customer);
-            System.out.println("集合：--------" + list);
-            System.out.println("当前对象：---------" + this);
             lock.notifyAll();
             return customer;
         }
@@ -85,6 +96,16 @@ public class BusinessController {
     public String create(@PathVariable("business") String business, Model model){
         Customer customer = add(business);
         model.addAttribute("wait_customer",customer);
+
+        //生成排队号码记录，存入数据库中
+        Queue_Number number = new Queue_Number();
+        number.setNum_id(customer.getNumid());
+        number.setCreate_time(new Date());
+        number.setNum(customer.getNum());
+        log.debug("queue_number",number);
+        //存入数据库
+        numberService.addNumber(number);
+
         return "business";
     }
 
@@ -93,6 +114,10 @@ public class BusinessController {
     public String getCustomer(Model model){
         Customer customer = get();
         model.addAttribute("run_customer",customer);
+
+        //插入叫号时间记录
+        numberService.addCallTime(customer.getNumid(),new Date());
+
         //广播叫号
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -117,16 +142,21 @@ public class BusinessController {
                     }
                     //判断customer是否来到
                     if (Thread.currentThread().isInterrupted()) {
-                        System.out.println("播报结束");
+                        log.debug("播报结束");
                         break;
                     }
                 }
+
+                //叫号超时，插入超时标记
+                if(!Thread.currentThread().isInterrupted()){
+                    numberService.overtime(customer.getNumid());
+                }
+
                 xj.safeRelease();
                 sap.safeRelease();
             }
         });
         thread.start();
-        System.out.println(thread+"---"+thread.getName()+"---"+thread.getId());
         model.addAttribute("threadId",thread.getId());
         return "little_LED";
     }
@@ -134,12 +164,14 @@ public class BusinessController {
     //客户到达
     @GetMapping("/arrive/{threadId}")
     @ResponseBody
-    public String arrive(@PathVariable("threadId") Long threadId){
-        System.out.println(threadId);
+    public String arrive(@PathVariable("threadId") Long threadId, @RequestParam(name = "numid") String numid){
+        log.debug("threadID",threadId);
+        log.debug(numid);
         Thread thread = findThread(threadId);
-        System.out.println(thread);
+        log.debug("thread",thread);
         if(thread != null){
             thread.interrupt();
+            numberService.addStartTime(numid,new Date());
         }
         return null;
 

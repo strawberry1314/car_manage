@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Customer {
 
+    private String numid;
     private String num;
     private String business;
 

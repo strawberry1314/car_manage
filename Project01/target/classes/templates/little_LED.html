@@ -9,7 +9,7 @@
 <h1>小窗口</h1>
 <h2 th:text="|${run_customer.num}' 正在办理业务'|" th:if="${not #strings.isEmpty(run_customer)}"></h2>
 <a th:href="@{/getCustomer}">完成，请求派单</a>
-<a th:href="@{/arrive/} + ${threadId}" th:if="${not #strings.isEmpty(run_customer)}">客户到来</a>
+<a th:href="@{/arrive/} + ${threadId} + ${'?numid='} + ${run_customer.numid}" th:if="${not #strings.isEmpty(run_customer)}">客户到来</a>
 
 </body>
 </html>
