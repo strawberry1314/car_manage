@@ -3,6 +3,7 @@ package com.jfrao.web;
 
 import com.jfrao.domain.Customer;
 import com.jfrao.domain.User;
+import com.jfrao.domain.User_In_Queue;
 import com.jfrao.service.UserLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.InetAddress;
+import java.util.List;
 
 @Controller
 public class UserOperationLogController {
@@ -46,6 +48,21 @@ public class UserOperationLogController {
         }else {
             return null;
         }
+    }
+
+    @RequestMapping("/GetLog/{Operation}")
+    public String GetLog(@PathVariable("Operation") String Operation, HttpServletRequest request, Model model, HttpSession session){
+        if("UserLog".equals(Operation)){
+            User user = (User)session.getAttribute("user");
+            List<User_In_Queue> list = userLogService.GetLog(user, null, null);
+            model.addAttribute("LogList", list);
+            return "Log";
+        }else if("TimeLog".equals(Operation)){
+            List<User_In_Queue> list = userLogService.GetLog(null, "2020/03/10 11:13:08", "2020/03/10 16:18:59");
+            model.addAttribute("LogList",list);
+            return "Log";
+        }
+        return "log";
     }
 
     private String getIP(HttpServletRequest request){

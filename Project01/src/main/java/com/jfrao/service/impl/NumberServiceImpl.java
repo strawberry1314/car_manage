@@ -20,7 +20,7 @@ public class NumberServiceImpl implements NumberService {
     }
 
     @Override
-    public void addCallTime(String numid, String time) {
+    public void addCallTime(String numid, Date time) {
         numberMapper.addCallTime(numid,time);
     }
 

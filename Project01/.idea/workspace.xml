@@ -12,13 +12,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-<<<<<<< HEAD
         <option value="Class" />
         <option value="Interface" />
-=======
         <option value="Interface" />
         <option value="Class" />
->>>>>>> 2816bac3434e9f600b8cae083cf1b9bc4ea71ac3
       </list>
     </option>
   </component>
@@ -108,14 +105,11 @@
       <workItem from="1583388362334" duration="3843000" />
       <workItem from="1583456572296" duration="16151000" />
       <workItem from="1583633554949" duration="4941000" />
-<<<<<<< HEAD
       <workItem from="1583739902509" duration="7180000" />
       <workItem from="1583809260352" duration="4524000" />
       <workItem from="1583831384729" duration="4000" />
-=======
       <workItem from="1583738986377" duration="5534000" />
       <workItem from="1583804866985" duration="10107000" />
->>>>>>> 2816bac3434e9f600b8cae083cf1b9bc4ea71ac3
     </task>
     <servers />
   </component>
